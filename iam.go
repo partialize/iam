@@ -21,7 +21,7 @@ type (
 )
 
 // New creates an instance of IAM.
-func New() *IAM {
+func New() (*IAM, error) {
 	return NewWithConfig(
 		Config{
 			EnableLogging: false,
@@ -30,18 +30,19 @@ func New() *IAM {
 }
 
 // NewWithConfig creates an instance of IAM.
-func NewWithConfig(config Config) *IAM {
-	iam := &IAM{
-		echo: echo.New(),
-	}
+func NewWithConfig(config Config) (*IAM, error) {
+	e := echo.New()
+	e.HideBanner = true
 
 	if config.EnableLogging {
-		iam.echo.Use(middleware.Logger())
+		e.Use(middleware.Logger())
 	}
-	iam.echo.Use(middleware.Recover())
-	iam.echo.Use(middleware.BodyFlush())
+	e.Use(middleware.Recover())
+	e.Use(middleware.BodyFlush())
 
-	return iam
+	return &IAM{
+		echo: e,
+	}, nil
 }
 
 // NewContext returns a Context instance.

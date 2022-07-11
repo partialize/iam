@@ -12,7 +12,8 @@ import (
 )
 
 func TestIAM(t *testing.T) {
-	iam := New()
+	iam, err := New()
+	assert.NoError(t, err)
 
 	req := httptest.NewRequest(http.MethodGet, "/", nil)
 	rec := httptest.NewRecorder()
@@ -24,7 +25,7 @@ func TestIAM(t *testing.T) {
 }
 
 func TestIAM_Start(t *testing.T) {
-	iam := New()
+	iam, err := New()
 	errChan := make(chan error)
 
 	go func() {
@@ -34,14 +35,15 @@ func TestIAM_Start(t *testing.T) {
 		}
 	}()
 
-	err := waitForServerStart(iam, errChan)
+	err = waitForServerStart(iam, errChan)
 	assert.NoError(t, err)
 
 	assert.NoError(t, iam.Close())
 }
 
 func TestIAM_ServeHTTP(t *testing.T) {
-	iam := New()
+	iam, err := New()
+	assert.NoError(t, err)
 
 	req := httptest.NewRequest(http.MethodGet, "/", nil)
 	rec := httptest.NewRecorder()
