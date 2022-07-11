@@ -1,0 +1,11 @@
+.DS_Store
+coverage.txt
+_test
+vendor
+.idea
+*.iml
+*.out
+.vscode
+
+# ENV
+.apiflow.toml
