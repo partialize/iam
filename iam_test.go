@@ -2,7 +2,6 @@ package iam
 
 import (
 	"context"
-	"errors"
 	"github.com/stretchr/testify/assert"
 	"net/http"
 	"net/http/httptest"
@@ -14,14 +13,7 @@ import (
 func TestIAM(t *testing.T) {
 	iam, err := New()
 	assert.NoError(t, err)
-
-	req := httptest.NewRequest(http.MethodGet, "/", nil)
-	rec := httptest.NewRecorder()
-
-	c := iam.NewContext(req, rec)
-
-	iam.DefaultHTTPErrorHandler(errors.New("error"), c)
-	assert.Equal(t, http.StatusInternalServerError, rec.Code)
+	assert.NotNil(t, iam)
 }
 
 func TestIAM_Start(t *testing.T) {
