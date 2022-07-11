@@ -38,7 +38,6 @@ func NewWithConfig(config Config) (*IAM, error) {
 		e.Use(middleware.Logger())
 	}
 	e.Use(middleware.Recover())
-	e.Use(middleware.BodyFlush())
 
 	return &IAM{
 		echo: e,
