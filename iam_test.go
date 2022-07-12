@@ -12,6 +12,7 @@ import (
 
 func TestIAM(t *testing.T) {
 	iam, err := New()
+
 	assert.NoError(t, err)
 	assert.NotNil(t, iam)
 }
@@ -28,8 +29,8 @@ func TestIAM_Start(t *testing.T) {
 	}()
 
 	err = waitForServerStart(iam, errChan)
-	assert.NoError(t, err)
 
+	assert.NoError(t, err)
 	assert.NoError(t, iam.Close())
 }
 
